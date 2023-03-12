@@ -1,0 +1,49 @@
+{
+    "debug": false,
+
+    "writeLogs": false,
+    "logFile": "/var/log/minepot/minepot.logs",
+
+    "writeHistory": false,
+    "historyFile": "/var/log/minepot/minepot.history",
+
+    "port": 25565,
+    "pollIntervalMs": 50,
+    "idleTimeoutS": 10,
+
+    "reportThreshold": 1,
+
+    "abuseIPDBReport": false,
+    "abuseIPDBKey": "XXXXXXXXXXXXXXX",
+    "abuseIPDBCooldownH": 24,
+
+    "webhookReport": false,
+    "webhookUrl": "https://discord.com/api/webhooks/XXXXXXXXX/XXXXXXXXXXXXXX",
+    "webhookCooldownH": 1,
+    "webhookEmbedColor": "#00aa00",
+
+    "statusResponse": true,
+    "statusResponseData": {
+        "version": {
+            "name": "Unknown",
+            "protocol": -1
+        },
+        "players": {
+            "max": 10,
+            "online": 2,
+            "sample": [
+                {
+                    "name": "jeb_",
+                    "id": "853c80ef-3c37-49fd-aa49-938b674adae6"
+                },
+                {
+                    "name": "Notch",
+                    "id": "069a79f4-44e9-4726-a5be-fca90e38aaf5"
+                }
+            ]
+        },
+        "description": "     Hello \u00A7c\u00A7l%IP%\u00A7r! You have been \u00A7f\u00A7ltrolled\u00A7r!\u00A7r\u00A7r\n    \u00A7n\u00A7bhttps://github.com/LockBlock-dev/MinePot",
+        "favicon": ""
+    },
+    "faviconPath": "./assets/trollface.png"
+}

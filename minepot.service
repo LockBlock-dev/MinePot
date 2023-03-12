@@ -1,0 +1,13 @@
+[Unit]
+Description=MinePot
+After=network.target
+
+[Service]
+Type=simple
+ExecStartPre=/bin/mkdir -p /var/log/minepot/
+ExecStartPre=/bin/mkdir -p /etc/minepot/
+ExecStart=/home/MinePot/MinePot
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
