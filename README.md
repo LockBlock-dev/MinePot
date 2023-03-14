@@ -37,6 +37,7 @@ See the [changelog](/CHANGELOG.md) for the latest updates.
 -   Download or clone the project.
 -   Download the binary from the [Releases](../../releases) or [build it](#compiling-from-source) yourself.
 -   [Configure MinePot](#configuring-minepot).
+-   Edit the `ExecStart` line in [`minepot.service`](/minepot.service) to something like: `ExecStart=/home/YOUR_USERNAME/MinePot/MinePot`
 -   Install MinePot by using [`install.sh`](/install.sh). It will setup the tool and start it as a service for you.
 
 ## Compiling from source
