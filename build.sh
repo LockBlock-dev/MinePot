@@ -2,5 +2,5 @@
 
 # Build the binary outside src
 cd src
-go build -o ..
+go build -ldflags "-s -w" -o ..
 cd ..
