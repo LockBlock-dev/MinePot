@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Prompt for sudo
 sudo -v
 
