@@ -3,6 +3,8 @@
 # Prompt for sudo
 sudo -v
 
+# Create the MinePot directory
+sudo mkdir /etc/minepot
 # Copy the service file
 sudo cp ./minepot.service /etc/systemd/system/minepot.service
 
