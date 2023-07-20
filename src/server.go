@@ -54,12 +54,12 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
+    
     defer func() {
         listener.Close()
     }()
 
     log.Printf("Server listening on port %d\nYou can edit the config at /etc/minepot/config.json", config.Port)
-
 
     if config.WriteLogs {
         // Logs the logs file path
