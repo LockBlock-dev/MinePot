@@ -30,10 +30,6 @@ func handleHandshake(conn *typings.ConnWrapper, receivedPacket packets.Minecraft
         )
     }
 
-    conn.ReceivedProtocol = int(handshake.ProtocolVersion)
+    conn.ReceivedProtocol = handshake.ProtocolVersion
     conn.DidHandshake = true
-
-    if handshake.NextState == 1 {
-        handleStatusRequest(conn)
-    }
 }

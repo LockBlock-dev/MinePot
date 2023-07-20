@@ -1,69 +1,75 @@
 package packets
 
 import (
-	"bufio"
-	"encoding/binary"
 	"fmt"
-	"io"
-	"net"
+	"log"
+
+	"github.com/LockBlock-dev/MinePot/typings"
 )
 
 type MinecraftPacket struct {
-    Length    int32
-    PacketID  int32
+    Length    int
+    PacketId  int
     Data      []byte
 }
 
-func (p *MinecraftPacket) Read(conn net.Conn) error {
-    r := bufio.NewReader(conn)
-    
+func (p *MinecraftPacket) Read(conn *typings.ConnWrapper) error {
+    reader := typings.NewCustomReader(conn)
+
     // Read packet length
-    var length uint64
-    length, err := binary.ReadUvarint(r)
+    length, err := reader.ReadVarInt()
     if err != nil {
         return fmt.Errorf("failed to read packet length: %w", err)
     }
-    p.Length = int32(length)
+    p.Length = length
+
+    // Read packet id
+    var packetId int
+    packetId, err = reader.ReadVarInt()
+    if err != nil {
+        return fmt.Errorf("failed to read packet id: %w", err)
+    }
+    p.PacketId = packetId
 
     // Read packet data
-    data := make([]byte, p.Length)
-    if _, err := io.ReadFull(r, data); err != nil {
+    // Packet total length - id length
+    data := make([]byte, p.Length - 1)
+    if _, err := conn.Read(data); err != nil {
         return fmt.Errorf("failed to read packet data: %w", err)
     }
+    p.Data = data
 
-    // Extract packet ID
-    var packetID uint64
-    var n int
-    packetID, n = binary.Uvarint(data)
-    if n <= 0 {
-        return fmt.Errorf("failed to read packet ID")
+    if conn.Config.Debug {
+        remoteAddrString := conn.RemoteAddr().String()
+    
+        logStr := ""
+
+        for i, val := range data {
+            logStr += fmt.Sprintf("%#x", val)
+
+            if i != (len(data) - 1) {
+                logStr += ", "
+            }
+        }
+
+        log.Print(remoteAddrString + " - Raw packet data: [" + logStr + "]")
     }
-    p.PacketID = int32(packetID)
-
-    // Extract packet data
-    p.Data = data[n:]
 
     return nil
 }
 
-func (p *MinecraftPacket) Write(conn net.Conn) error {
-    // Calculate packet ID length
-    idBuf := make([]byte, binary.MaxVarintLen32)
-    idLen := binary.PutUvarint(idBuf, uint64(p.PacketID))
+func (p *MinecraftPacket) Write(conn *typings.ConnWrapper) error {
+    writer := typings.NewCustomWriter(conn)
 
-    // Calculate packet length
-    length := len(p.Data) + idLen
-    lengthBuf := make([]byte, binary.MaxVarintLen32)
-    lengthLen := binary.PutUvarint(lengthBuf, uint64(length))
-    
     // Write packet length
-    if _, err := conn.Write(lengthBuf[:lengthLen]); err != nil {
+    // Packet data length + id length
+    if err := writer.WriteVarInt(len(p.Data) + 1); err != nil {
         return fmt.Errorf("failed to write packet length: %w", err)
     }
 
-    // Write packed ID
-    if _, err := conn.Write(idBuf[:idLen]); err != nil {
-        return fmt.Errorf("failed to write packet ID: %w", err)
+    // Write packet id
+    if err := writer.WriteVarInt(p.PacketId); err != nil {
+        return fmt.Errorf("failed to write packet id: %w", err)
     }
 
     // Write packet data

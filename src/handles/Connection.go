@@ -28,12 +28,7 @@ func HandleConnection(conn typings.ConnWrapper) {
 
     for {
         packet := packets.MinecraftPacket{}
-        if err := packet.Read(conn); err != nil {
-            return
-        }
-
-        // "ghost" packet prevention
-        if packet.Length == 0 {
+        if err := packet.Read(&conn); err != nil {
             return
         }
 

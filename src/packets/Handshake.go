@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"io"
+
+	"github.com/LockBlock-dev/MinePot/typings"
 )
 
 type Handshake struct {
-    ProtocolVersion int32
+    ProtocolVersion int
 	ServerAddress string
 	ServerPort uint16
 	NextState int
@@ -16,24 +17,24 @@ type Handshake struct {
 
 func (p *Handshake) Read(data []byte) error {
     r := bytes.NewReader(data)
+    reader := typings.NewCustomReader(r)
 
     // Read protocol version
-    var version uint64
-    version, err := binary.ReadUvarint(r)
+    version, err := reader.ReadVarInt()
     if err != nil {
         return fmt.Errorf("failed to read protocol version: %w", err)
     }
-    p.ProtocolVersion = int32(version)
+    p.ProtocolVersion = version
 
     // Read server address length
-    serverAddressLen, err := binary.ReadUvarint(r)
+    serverAddressLen, err := reader.ReadVarInt()
     if err != nil {
         return fmt.Errorf("failed to read server address length: %w", err)
     }
 
     // Read server address
     serverAddressBytes := make([]byte, serverAddressLen)
-    if _, err := io.ReadFull(r, serverAddressBytes); err != nil {
+    if _, err := r.Read(serverAddressBytes); err != nil {
         return fmt.Errorf("failed to read server address: %w", err)
     }
     p.ServerAddress = string(serverAddressBytes)
@@ -46,12 +47,11 @@ func (p *Handshake) Read(data []byte) error {
     p.ServerPort = port
 
     // Read next state
-    var nextState uint64
-    nextState, err = binary.ReadUvarint(r)
+    nextState, err := reader.ReadVarInt()
     if err != nil {
         return fmt.Errorf("failed to read next state: %w", err)
     }
-    p.NextState = int(nextState)
+    p.NextState = nextState
 
     return nil
 }
