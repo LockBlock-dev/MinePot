@@ -49,16 +49,17 @@ func HandleConnection(conn typings.ConnWrapper) {
             )
         }
 
-        // Status Request packet has no data : https://wiki.vg/Protocol#Status_Request
-        if len(packet.Data) == 0 && packet.PacketID == 0x0 && conn.Config.StatusResponse {
-            handleStatusRequest(&conn)
-        } else {
-            switch packet.PacketID {
-                case 0x0:
+        switch packet.PacketId {
+            case 0x0:
+                // Status Request packet has no data : https://wiki.vg/Protocol#Status_Request
+                if len(packet.Data) == 0 && conn.Config.StatusResponse {
+                    handleStatusRequest(&conn)
+                } else {
                     handleHandshake(&conn, packet)
-                case 0x1:
-                    handlePing(&conn, packet)
-                default:
+                }
+            case 0x1:
+                handlePing(&conn, packet)
+            default:
                 log.Println(remoteAddrString + " - Unknown packet received with ID: " + fmt.Sprint(packet.PacketId))
         }
 
