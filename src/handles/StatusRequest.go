@@ -61,7 +61,7 @@ func handleStatusRequest(conn *typings.ConnWrapper) {
 	copy(data[offset:], jsonData)
 
 	responsePacket := packets.MinecraftPacket{
-		PacketID: 0x00, // Status Response
+		PacketId: 0x00, // Status Response
 		Data: data,
 	}
 	

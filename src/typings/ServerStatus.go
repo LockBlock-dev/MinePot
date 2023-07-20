@@ -13,7 +13,7 @@ type PlayersInfo struct {
 
 type Player struct {
     Name string `json:"name"`
-    ID   string `json:"id"`
+    Id   string `json:"id"`
 }
 
 type ServerStatus struct {

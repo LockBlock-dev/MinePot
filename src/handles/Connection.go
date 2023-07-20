@@ -42,8 +42,8 @@ func HandleConnection(conn typings.ConnWrapper) {
                 remoteAddrString +
                 " - Received packet => Length: " +
                 fmt.Sprint(packet.Length) +
-                ", ID: " +
-                fmt.Sprint(packet.PacketID) +
+                ", Id: " +
+                fmt.Sprint(packet.PacketId) +
                 ", Data: " +
                 string(packet.Data),
             )
@@ -59,8 +59,7 @@ func HandleConnection(conn typings.ConnWrapper) {
                 case 0x1:
                     handlePing(&conn, packet)
                 default:
-                    log.Println(remoteAddrString + " - Unknown packet received with ID: " + fmt.Sprint(packet.PacketID))
-            }
+                log.Println(remoteAddrString + " - Unknown packet received with ID: " + fmt.Sprint(packet.PacketId))
         }
 
         conn.PacketsReceived ++

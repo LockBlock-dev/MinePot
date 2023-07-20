@@ -28,7 +28,7 @@ func handlePing(conn *typings.ConnWrapper, receivedPacket packets.MinecraftPacke
 
 	// Send Pong Response packet : https://wiki.vg/Server_List_Ping#Pong_Response
 	responsePacket := packets.MinecraftPacket{
-	    PacketID: 0x01, // Pong Response
+	    PacketId: 0x01, // Pong Response
 	    Data: magicBuf, // Sent by the client
 	}
 	
