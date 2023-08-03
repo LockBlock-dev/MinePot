@@ -23,7 +23,7 @@ func Report(ip string, key string, port int) (int, error) {
     payload := fmt.Sprintf(
         "ip=%s&categories=%s&comment=%s",
         url.QueryEscape(ip),
-        url.QueryEscape("14, 15"),
+        url.QueryEscape("14"),
         url.QueryEscape(fmt.Sprintf(
             "%s: Minecraft server scan detected from %s on port %d%s",
             t.Format("2006-01-02 15:04:05"),
