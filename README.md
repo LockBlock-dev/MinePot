@@ -33,6 +33,8 @@ See the [changelog](/CHANGELOG.md) for the latest updates.
 
 ## Installation
 
+You can use Docker or install MinePot manually. Here's how:
+
 -   Download [go](https://go.dev/dl/) (go 1.20 required).
 -   Download or clone the project.
 -   Download the binary from the [Releases](../../releases) or [build it](#compiling-from-source) yourself.
