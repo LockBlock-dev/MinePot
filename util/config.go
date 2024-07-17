@@ -8,8 +8,7 @@ import (
 )
 
 func GetConfig() (*types.Config, error) {
-	file, err := os.Open("./config.json")
-	// file, err := os.Open("/etc/minepot/config.json")
+	file, err := os.Open("/etc/minepot/config.json")
 	if err != nil {
 		return &types.Config{}, err
 	}

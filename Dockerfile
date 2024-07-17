@@ -4,13 +4,19 @@ FROM golang:${GOLANG_VERSION}-alpine as build
 
 WORKDIR /app
 
+COPY go.mod .
+COPY go.sum .
+COPY server.go .
 COPY ./handler handler/
 COPY ./types types/
 COPY ./util util/
+COPY ./internal internal/
 
 RUN set -eux; \
-    go mod download; \
-    go build -ldflags "-s -w" -o /bin/minepot;
+    go mod download
+
+RUN set -eux; \
+    go build -ldflags "-s -w" -o /bin/minepot
 
 
 
