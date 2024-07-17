@@ -22,11 +22,13 @@ See the [changelog](/CHANGELOG.md) for the latest updates.
 -   Listen on any TCP port for incoming Minecraft packets
 -   Answer [Handshake](https://wiki.vg/Protocol#Handshake) packets
 -   Answer [Ping](https://wiki.vg/Protocol#Status) packets
+-   Artificial random ping
 -   Custom Status Response :
-    -   Custom version or version mirroring (send the received protocol version)
+    -   Custom version or version mirroring (send the received protocol/version)
     -   Fake players
     -   Custom MOTD
     -   Custom favicon
+    -   Random protocol/version
 -   IP reporting to [Abuse IP DB](https://www.abuseipdb.com/)
 -   IP reporting to a Discord Webhook
 -   History as a [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) formatted .history file
@@ -45,7 +47,7 @@ You can use Docker or install MinePot manually. Here's how:
 
 ## Compiling from source
 
--   Use [`build.sh`](/build.sh) or use `go build` in [`src`](/src)
+-   Use [`build.sh`](/build.sh) or use `go build`
 
 ## Configuring MinePot
 
@@ -58,27 +60,29 @@ If you already used [`install.sh`](/install.sh), the config can be found in `/et
 
 ## Config details
 
-| Item               | Values                                                     | Meaning                                            |
-| ------------------ | ---------------------------------------------------------- | -------------------------------------------------- |
-| debug              | `boolean`                                                  | Enable debug logs                                  |
-| writeLogs          | `boolean`                                                  | Enable logs file                                   |
-| logFile            | `text`                                                     | Path to the logs file                              |
-| writeHistory       | `boolean`                                                  | Enable history file                                |
-| historyFile        | `text`                                                     | Path to the history file                           |
-| port               | `number`                                                   | TCP port to listen on                              |
-| pollIntervalMs     | `number`                                                   | Time to wait between each packet (in milliseconds) |
-| idleTimeoutS       | `number`                                                   | Time to wait before the connection times out       |
-| reportThreshold    | `number`                                                   | Amount of packets before being reported            |
-| abuseIPDBReport    | `boolean`                                                  | Enable Abuse IP DB reports                         |
-| abuseIPDBKey       | `text`                                                     | Abuse IP DB API key                                |
-| abuseIPDBCooldownH | `number`                                                   | Cooldown between each reports (in hours)           |
-| webhookReport      | `boolean`                                                  | Enable Discord webhook reports                     |
-| webhookUrl         | `text`                                                     | Discord webhook URL                                |
-| webhookCooldownH   | `number`                                                   | Cooldown between each reports (in hours)           |
-| webhookEmbedColor  | `text`                                                     | Embed hex color                                    |
-| statusResponse     | `boolean`                                                  | Enable Status Response                             |
-| statusResponseData | [`JSON`](https://wiki.vg/Server_List_Ping#Status_Response) | Minecraft Status Reponse data                      |
-| faviconPath        | `text`                                                     | Path to the favicon PNG image                      |
+| Item               | Values                                                     | Meaning                                                             |
+| ------------------ | ---------------------------------------------------------- | ------------------------------------------------------------------- |
+| debug              | `boolean`                                                  | Enable debug logs                                                   |
+| writeLogs          | `boolean`                                                  | Enable logs file                                                    |
+| logFile            | `text`                                                     | Path to the logs file                                               |
+| writeHistory       | `boolean`                                                  | Enable history file                                                 |
+| historyFile        | `text`                                                     | Path to the history file                                            |
+| port               | `number`                                                   | TCP port to listen on                                               |
+| pingDelayMinMs     | `number`                                                   | Minimum artificial server ping (in milliseconds)                    |
+| pingDelayMaxMs     | `number`                                                   | Maximum artificial server ping (in milliseconds)                    |
+| idleTimeoutS       | `number`                                                   | Time to wait before the connection times out                        |
+| reportThreshold    | `number`                                                   | Amount of packets before being reported                             |
+| abuseIPDBReport    | `boolean`                                                  | Enable Abuse IP DB reports                                          |
+| abuseIPDBKey       | `text`                                                     | Abuse IP DB API key                                                 |
+| abuseIPDBCooldownH | `number`                                                   | Cooldown between each reports (in hours)                            |
+| webhookReport      | `boolean`                                                  | Enable Discord webhook reports                                      |
+| webhookUrl         | `text`                                                     | Discord webhook URL                                                 |
+| webhookCooldownH   | `number`                                                   | Cooldown between each reports (in hours)                            |
+| webhookEmbedColor  | `text`                                                     | Embed hex color                                                     |
+| randomVersion      | `boolean`                                                  | Enable random Minecraft version and protocol in the status response |
+| statusResponse     | `boolean`                                                  | Enable Status Response                                              |
+| statusResponseData | [`JSON`](https://wiki.vg/Server_List_Ping#Status_Response) | Minecraft Status Reponse data                                       |
+| faviconPath        | `text`                                                     | Path to the favicon PNG image                                       |
 
 ## FAQ
 
@@ -88,6 +92,7 @@ If you already used [`install.sh`](/install.sh), the config can be found in `/et
 ## Credits
 
 -   [Wiki.vg](https://wiki.vg) Minecraft protocol documentation
+-   [go-mc](https://github.com/Tnze/go-mc) Minecraft protocol implementation
 
 ## Copyright
 

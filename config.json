@@ -8,10 +8,11 @@
     "historyFile": "/var/log/minepot/minepot.history",
 
     "port": 25565,
-    "pollIntervalMs": 50,
+    "pingDelayMinMs": 50,
+    "pingDelayMaxMs": 500,
     "idleTimeoutS": 10,
 
-    "reportThreshold": 1,
+    "reportThreshold": 2,
 
     "abuseIPDBReport": false,
     "abuseIPDBKey": "XXXXXXXXXXXXXXX",
@@ -22,6 +23,7 @@
     "webhookCooldownH": 1,
     "webhookEmbedColor": "#00aa00",
 
+    "randomVersion": true,
     "statusResponse": true,
     "statusResponseData": {
         "version": {

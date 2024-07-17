@@ -1,6 +1,6 @@
-package typings
+package types
 
-import "net"
+import "github.com/Tnze/go-mc/net"
 
 type ConnWrapper struct {
 	net.Conn
