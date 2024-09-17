@@ -12,10 +12,24 @@ import (
 	"github.com/LockBlock-dev/MinePot/util"
 	"github.com/Tnze/go-mc/net"
 	"github.com/muesli/cache2go"
+	"github.com/speedata/optionparser"
 )
 
 func main() {
-	config, err := util.GetConfig()
+	var configPath string = "/etc/minepot/config.json"
+
+	parser := optionparser.NewOptionParser()
+
+	parser.On("-c", "--config <path>", "Path to the config file", &configPath)
+
+	err := parser.Parse()
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println("\"MinePot -h --help\" for help")
+		return
+	}
+
+	config, err := util.GetConfig(configPath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,7 +53,7 @@ func main() {
 		}
 		defer historyFile.Close()
 
-		_, err = historyFile.WriteString("datetime, ip, packets_count, reported, handshake, ping")
+		_, err = historyFile.WriteString("datetime, ip, packets_count, reported, handshake, ping\n")
 		if err != nil {
 			log.Fatal("Failed to write history headers:", err)
 		}
@@ -59,7 +73,7 @@ func main() {
 		listener.Close()
 	}()
 
-	log.Printf("Server listening on port %d\nYou can edit the config at /etc/minepot/config.json", config.Port)
+	log.Printf("Server listening on port %d\nYou can edit the config at %s", config.Port, configPath)
 
 	if config.WriteLogs {
 		// Logs the logs file path

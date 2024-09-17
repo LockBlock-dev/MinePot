@@ -7,8 +7,8 @@ import (
 	"github.com/LockBlock-dev/MinePot/types"
 )
 
-func GetConfig() (*types.Config, error) {
-	file, err := os.Open("/etc/minepot/config.json")
+func GetConfig(path string) (*types.Config, error) {
+	file, err := os.Open(path)
 	if err != nil {
 		return &types.Config{}, err
 	}
