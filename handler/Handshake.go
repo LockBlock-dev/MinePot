@@ -31,7 +31,7 @@ func handleHandshake(conn *types.ConnWrapper) int {
 
 	if conn.Config.Debug {
 		log.Println(
-			conn.Conn.Socket.RemoteAddr().String() +
+			conn.SrcAddr.String() +
 				" - Received Handshake packet => Protocol version: " +
 				fmt.Sprint(Protocol) +
 				", Server address: " +

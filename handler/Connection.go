@@ -8,7 +8,7 @@ import (
 )
 
 func HandleConnection(conn types.ConnWrapper) {
-	remoteAddrString := conn.Conn.Socket.RemoteAddr().String()
+	remoteAddrString := conn.SrcAddr.String()
 
 	defer func() {
 		log.Println(remoteAddrString + " - Closing connection")

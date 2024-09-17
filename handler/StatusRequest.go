@@ -13,7 +13,7 @@ import (
 )
 
 func handleStatusRequest(conn *types.ConnWrapper) {
-	remoteAddrString := conn.Conn.Socket.RemoteAddr().String()
+	remoteAddrString := conn.SrcAddr.String()
 
 	// Handle Status Request packet : https://wiki.vg/Server_List_Ping#Status_Request
 	if conn.Config.Debug {
@@ -48,7 +48,7 @@ func handleStatusRequest(conn *types.ConnWrapper) {
 	statusResponseData.Description = strings.Replace(
 		statusResponseData.Description,
 		ipSubstr,
-		conn.Conn.Socket.RemoteAddr().(*net.TCPAddr).IP.String(),
+		conn.SrcAddr.(*net.TCPAddr).IP.String(),
 		1,
 	)
 

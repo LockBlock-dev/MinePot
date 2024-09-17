@@ -11,6 +11,7 @@ import (
 	"github.com/LockBlock-dev/MinePot/types"
 	"github.com/LockBlock-dev/MinePot/util"
 	"github.com/Tnze/go-mc/net"
+	"github.com/mailgun/proxyproto"
 	"github.com/muesli/cache2go"
 )
 
@@ -43,6 +44,10 @@ func main() {
 		if err != nil {
 			log.Fatal("Failed to write history headers:", err)
 		}
+	}
+
+	if config.Haproxy {
+		log.Println("Using HAProxy protocol, make sure to configure the HAProxy to use it!")
 	}
 
 	// Setup the cache
@@ -83,9 +88,31 @@ func main() {
 		// Set a timeout of X seconds (see config.json)
 		conn.Socket.SetDeadline(time.Now().Add(time.Duration(config.IdleTimeoutS) * time.Second))
 
+		srcAddr := conn.Socket.RemoteAddr()
+		DestAddr := conn.Socket.LocalAddr()
+		if config.Haproxy {
+
+			h, err := proxyproto.ReadHeader(conn)
+			if err != nil {
+				log.Fatal("Client is not using the PROXY protocol " + srcAddr.String())
+				conn.Close()
+				continue
+			}
+
+			if h.IsLocal {
+				conn.Close()
+				continue
+			}
+
+			srcAddr = h.Source
+			DestAddr = h.Destination
+		}
+
 		connWrapper := types.ConnWrapper{
-			Conn:   conn,
-			Config: config,
+			Conn:     conn,
+			SrcAddr:  srcAddr,
+			DestAddr: DestAddr,
+			Config:   config,
 		}
 
 		// Start a new goroutine to handle the connection

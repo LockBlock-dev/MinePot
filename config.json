@@ -1,5 +1,6 @@
 {
     "debug": false,
+    "haproxy": false,
 
     "writeLogs": false,
     "logFile": "/var/log/minepot/minepot.logs",

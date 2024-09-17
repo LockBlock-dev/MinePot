@@ -8,14 +8,16 @@ See the [changelog](/CHANGELOG.md) for the latest updates.
 
 ## Table of content
 
--   [**Features**](#features)
--   [**Installation**](#installation)
--   [**Compiling from source**](#compiling-from-source)
--   [**Configuring MinePot**](#configuring-minepot)
--   [**Config details**](#config-details)
--   [**FAQ**](#faq)
--   [**Credits**](#credits)
--   [**Copyright**](#copyright)
+- [MinePot](#minepot)
+  - [Table of content](#table-of-content)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Compiling from source](#compiling-from-source)
+  - [Configuring MinePot](#configuring-minepot)
+  - [Config details](#config-details)
+  - [FAQ](#faq)
+  - [Credits](#credits)
+  - [Copyright](#copyright)
 
 ## Features
 
@@ -63,6 +65,7 @@ If you already used [`install.sh`](/install.sh), the config can be found in `/et
 | Item               | Values                                                     | Meaning                                                             |
 | ------------------ | ---------------------------------------------------------- | ------------------------------------------------------------------- |
 | debug              | `boolean`                                                  | Enable debug logs                                                   |
+| haproxy            | `boolean`                                                  | Enable HAProxy \(Do not touch unless you know what you're doing\)   |
 | writeLogs          | `boolean`                                                  | Enable logs file                                                    |
 | logFile            | `text`                                                     | Path to the logs file                                               |
 | writeHistory       | `boolean`                                                  | Enable history file                                                 |

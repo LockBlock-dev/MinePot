@@ -11,7 +11,7 @@ import (
 
 func handleServerListPing(conn *types.ConnWrapper) {
 	var p packet.Packet
-	remoteAddrString := conn.Conn.Socket.RemoteAddr().String()
+	remoteAddrString := conn.SrcAddr.String()
 
 	for i := 0; i < 2; i++ {
 

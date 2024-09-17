@@ -1,7 +1,8 @@
 package types
 
 type Config struct {
-	Debug bool `json:"debug"`
+	Debug   bool `json:"debug"`
+	Haproxy bool `json:"haproxy"`
 
 	WriteLogs bool   `json:"writeLogs"`
 	LogFile   string `json:"logFile"`

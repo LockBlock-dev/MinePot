@@ -13,7 +13,7 @@ import (
 func handlePing(conn *types.ConnWrapper, p *packet.Packet) {
 	var Magic packet.Long
 
-	remoteAddrString := conn.Conn.Socket.RemoteAddr().String()
+	remoteAddrString := conn.SrcAddr.String()
 
 	// Handle Ping Request packet : https://wiki.vg/Server_List_Ping#Ping_Request
 	if err := p.Scan(&Magic); err != nil {

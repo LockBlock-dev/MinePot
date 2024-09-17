@@ -1,9 +1,15 @@
 package types
 
-import "github.com/Tnze/go-mc/net"
+import (
+	"net"
+
+	mcNet "github.com/Tnze/go-mc/net"
+)
 
 type ConnWrapper struct {
-	net.Conn
+	mcNet.Conn
+	SrcAddr          net.Addr
+	DestAddr         net.Addr
 	Config           *Config
 	PacketsReceived  int
 	ReceivedProtocol int
